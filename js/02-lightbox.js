@@ -1,30 +1,22 @@
 import { galleryItems } from "./gallery-items.js";
 // Change code below this line
 
-document.querySelector(".gallery").append(
-  ...galleryItems.map((item) => {
-    // ! div
-    const div = document.createElement("div");
-    div.className = "gallery__item";
+const gallery = document.querySelector(".gallery");
 
-    // ! a
-    const a = document.createElement("a");
-    a.className = "gallery__link";
-    a.href = item.original;
+gallery.insertAdjacentHTML(
+  "afterbegin",
+  galleryItems
+    .map((item) => {
+      let str = `<div class="gallery__item"> <a class="gallery__link" href="${item.original}" ><img src="${item.preview}" alt="${item.description}" data-source="${item.original}" /></a> </div>`;
 
-    a.addEventListener("click", (e) => e.preventDefault());
-
-    // ! img
-    const img = document.createElement("img");
-    img.src = item.preview;
-    img.dataset.source = item.original;
-
-    a.append(img);
-    div.append(a);
-
-    return a;
-  })
+      return str;
+    })
+    .join("")
 );
 
-let gallery = new SimpleLightbox(".gallery a");
-gallery.on("show.simplelightbox");
+let ligthBox = new SimpleLightbox(".gallery a", {
+  captions: true,
+  captionsData: "data-source",
+  captionDelay: 250,
+});
+ligthBox.on("show.simplelightbox");
