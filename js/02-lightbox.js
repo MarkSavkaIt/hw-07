@@ -3,16 +3,15 @@ import { galleryItems } from "./gallery-items.js";
 
 const gallery = document.querySelector(".gallery");
 
-gallery.insertAdjacentHTML(
-  "afterbegin",
-  galleryItems
-    .map((item) => {
-      let str = `<div class="gallery__item"> <a class="gallery__link" href="${item.original}" ><img src="${item.preview}" alt="${item.description}" data-source="${item.original}" /></a> </div>`;
+const listElements = galleryItems
+  .map((item) => {
+    let str = `<div class="gallery__item"> <a class="gallery__link" href="${item.original}" ><img src="${item.preview}" alt="${item.description}" data-source="${item.original}" /></a> </div>`;
 
-      return str;
-    })
-    .join("")
-);
+    return str;
+  })
+  .join("");
+
+gallery.insertAdjacentHTML("afterbegin", listElements);
 
 let ligthBox = new SimpleLightbox(".gallery a", {
   captions: true,
